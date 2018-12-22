@@ -20,7 +20,7 @@ for filename in files:
     Ts = 1.0 / fs_rate  # okres pomiedzy probkami
     t = scipy.arange(0, secs, Ts)  # czas odpowiadający próbkom
 
-    signal = signal * np.kaiser(N, 30)  # zastosowanie kaisera
+    signal = signal * np.kaiser(N, 10)  # zastosowanie kaisera
 
     FFT = abs(scipy.fft(signal))  # Transformata FFT
     FFT[0:100] = 0  # obcięcie dolnych wartosci (pierwszy pik)
@@ -35,12 +35,11 @@ for filename in files:
     fft_freqs = np.array(freqs)
 
     pitch = fft_freqs[np.argmax(FFT2)]  # znalezenie dominujacej czestotliwosci ########
-    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+    print(filename)
     if(pitch < 190):
         print("M")
         if filename[4]=="K":
             print("ERROR ##############")
-            print(filename)
             print(pitch)
             err+=1
     else:
