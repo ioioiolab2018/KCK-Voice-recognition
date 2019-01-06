@@ -4,19 +4,9 @@ import scipy.io.wavfile as wavfile
 import scipy.signal
 import scipy.fftpack
 import numpy as np
-from matplotlib import pyplot as plt
-import os
-import glob
 
 
-# os.chdir('train/')
-# files = glob.glob('*.wav')
-# show = True
-# err = 0
-# for filename in files:
-
-
-def run(filename, show):
+def run(filename):
     fs_rate, signal = wavfile.read(filename)  # fs_rate - częstotliwość próbkowania
     l_audio = len(signal.shape)  # liczba kanałów
 
@@ -49,22 +39,10 @@ def run(filename, show):
     else:
         print("K")
 
-    if show:
-        freqs_side = freqs[range(len(FFT_side))]  # Wycięcie częstotliwości do wykresu
-        fft_freqs_side = np.array(freqs_side)
-        plt.subplot(211)
-        p1 = plt.plot(t, signal, "g")  # plotting the signal
-        plt.xlabel('Time')
-        plt.ylabel('Amplitude')
-        plt.subplot(212)
-        p3 = plt.plot(freqs_side, abs(FFT_side), "b")  # plotting the positive fft spectrum
-        plt.xlabel('Frequency (Hz)')
-        plt.ylabel('Count single-sided')
-        plt.show()
-
 
 if __name__ == '__main__':
-    if len(sys.argv) > 2:
-        run(sys.argv[1], sys.argv[2])
-    else:
-        run(sys.argv[1], False)
+    try:
+        if len(sys.argv) > 1:
+            run(sys.argv[1])
+    except:
+        print("error")
